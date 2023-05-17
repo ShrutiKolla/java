@@ -113,10 +113,51 @@ public class classroom {
         System.out.println("ans: " + ans);
     }
 
+    // 6. Job Sequencing Problem
+    static class job {
+        int profit, deadline, id;
+        public job(int p, int d, int i) {
+            profit = p;
+            deadline = d;
+            id = i;
+        }
+    }
+    public static void jobSequencing(int[][] jobsInfo) {
+        // Arraylist jobs
+        ArrayList<job> jobs = new ArrayList<>();
+        
+        // Assigning values
+        for (int i = 0; i < jobsInfo.length; i++) {
+            jobs.add(new job(jobsInfo[i][1], jobsInfo[i][0], i));
+        }
+
+        // sorting
+        Collections.sort(jobs, (a,b) -> b.profit - a.profit); // descending order of profit
+        int time = 0;
+        ArrayList<Integer> seq = new ArrayList<>();
+        for (int i = 0; i < jobs.size(); i++) {
+            if(jobs.get(i).deadline > time) {
+                time++;
+                seq.add(jobs.get(i).id);
+            }
+        }
+        System.out.println("max jobs: " + seq.size());
+        for (int i = 0; i < seq.size(); i++) {
+            System.out.println("job" + seq.get(i));
+        }
+    }
+
     public static void main(String[] args) {
+        int[][] jobsInfo = {
+            {4,20},
+            {1,10},
+            {1,40},
+            {1,30}
+        };
+        jobSequencing(jobsInfo);
         // 5. Indian coins
-        int[] notes = {1,2,5,10,20,50,100,500,2000};
-        indianCoins(notes, 590);
+        // int[] notes = {1,2,5,10,20,50,100,500,2000};
+        // indianCoins(notes, 590);
 
         // 4. max length chain of pairs
         // int pairs[][] = {
