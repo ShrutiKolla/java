@@ -90,6 +90,62 @@ public class binTree {
             int rh = height(root.right);
             return 1 + Math.max(lh, rh);
         }
+
+        public int countNodes(Node root) {
+            if(root == null) {
+                return 0;
+            }
+            int leftC = countNodes(root.left);
+            int rightC = countNodes(root.right);
+            return leftC + rightC + 1;
+        }
+
+        public int sumNodes(Node root) {
+            if(root == null) {
+                return 0;
+            }
+            int leftS = sumNodes(root.left);
+            int rightS = sumNodes(root.right);
+            return root.data + leftS + rightS;
+        }
+
+        // Approach 1
+        public int diam(Node root) {
+            if(root == null) {
+                return 0;
+            }
+            int leftDia = diam(root.left);
+            int rightDia = diam(root.right);
+            int lh = height(root.left);
+            int rh = height(root.right);
+            int self = lh + rh + 1;
+            return Math.max(Math.max(self, leftDia), rightDia);
+        }
+
+        // Approach 2
+        public class info{
+            int diam;
+            int height;
+            public info(int d, int h) {
+                diam = d;
+                height = h;
+            }
+        }
+        public info Diam(Node root) {
+            if(root == null) {
+                return new info(0, 0);
+            }
+            int leftDia = Diam(root.left).diam;
+            int rightDia = Diam(root.right).diam;
+
+            int lh = Diam(root.left).height;
+            int rh = Diam(root.right).height;
+            int currH = Math.max(lh, rh) + 1;
+            int self = leftDia + rightDia + 1;
+            int currDiam = Math.max(self, Math.max(leftDia, rightDia));
+            return new info(currDiam, currH);
+        }
+
     }
     public static void main(String[] args) {
         int[] nodes = {1, 2, 4, -1, -1, 5, -1, 6, -1, 7, -1, -1, 3, -1, -1};
@@ -97,6 +153,6 @@ public class binTree {
         Node root = tree.buildTree(nodes);   
         // System.out.println(root.data);
         // tree.preOrder(root);
-        System.out.println(tree.height(root));
+        System.out.println(tree.Diam(root).diam);
     }
 }
