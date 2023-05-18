@@ -147,14 +147,61 @@ public class classroom {
         }
     }
 
+    // 7. Chocola Problem
+    public static void Chocola(int[] vc, int[] hc) {
+        Arrays.sort(vc);
+        Arrays.sort(hc);
+        int vi, hi;
+        int hp = 1;
+        int vp = 1;
+
+        int cost = 0;
+        vi = vc.length - 1;
+        hi = hc.length - 1;
+        while(vi >= 0 && hi >= 0) {
+            int vCost = vc[vi];
+            int hCost = hc[hi];
+            if(vCost >= hCost) {
+                cost += vCost * hp;
+                vp ++;
+                vi--;
+            } else {
+                cost += hCost * vp;
+                hp ++;
+                hi--;
+            }
+        }
+        while(vi >= 0) {
+            int vCost = vc[vi];
+            cost += vCost * hp;
+                vp ++;
+                vi--;
+        }
+        while(hi >= 0) {
+            int hCost = hc[hi];
+            cost += hCost * vp;
+                hp ++;
+                hi--;
+        }
+
+        System.out.println("total cost: " + cost);
+    }
+
     public static void main(String[] args) {
-        int[][] jobsInfo = {
-            {4,20},
-            {1,10},
-            {1,40},
-            {1,30}
-        };
-        jobSequencing(jobsInfo);
+        // 7. Chocola Problem
+        int[] verticalCost = {2, 1, 3, 1, 4};
+        int[] horizontalCost = {4, 1, 2};
+        Chocola(verticalCost, horizontalCost);
+
+        // 6. Job Sequencing
+        // int[][] jobsInfo = {
+        //     {4,20},
+        //     {1,10},
+        //     {1,40},
+        //     {1,30}
+        // };
+        // jobSequencing(jobsInfo);
+
         // 5. Indian coins
         // int[] notes = {1,2,5,10,20,50,100,500,2000};
         // indianCoins(notes, 590);
