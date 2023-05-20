@@ -122,6 +122,7 @@ public class binTree {
             return Math.max(Math.max(self, leftDia), rightDia);
         }
 
+        // 3. Diameter
         // Approach 2
         public class info{
             int diam;
@@ -131,6 +132,7 @@ public class binTree {
                 height = h;
             }
         }
+
         public info Diam(Node root) {
             if(root == null) {
                 return new info(0, 0);
@@ -215,16 +217,82 @@ public class binTree {
                 System.out.print(map.get(i).data + " ");
             }
         }
-        
+
+        // 4. kth level nodes
+        public void kLevel(Node root, int level, int k) {
+            if(level == k) {
+                System.out.print(root.data + " ");
+                return;
+            }
+            if(root == null) {
+                return;
+            }
+            kLevel(root.left, level + 1, k);
+            kLevel(root.right, level + 1, k);
+        }
+
+        // 5. lowest common ancestor
+        public Boolean findPath(Node root, int node, ArrayList<Integer> path) {
+            if(root == null) {
+                return false;
+            }
+            if(root.data == node) {
+                path.add(root.data);
+                return true;
+            }
+            path.add(root.data);
+            if(findPath(root.left, node, path)) {
+                return true;
+            }
+            if(findPath(root.right, node, path)) {
+                return true;
+            }
+            path.remove(path.size() - 1);
+            return false;
+        }
+        public void findLCA(Node root, int n1, int n2) {
+            ArrayList<Integer> path1 = new ArrayList<>();
+            ArrayList<Integer> path2 = new ArrayList<>();
+
+            findPath(root, n1, path1);
+            findPath(root, n2, path2);
+            int i = 0;
+            for (i = 0; i < path1.size() ; i++) {
+                if(path1.get(i) != path2.get(i)) {
+                    break;
+                }
+            }
+            System.out.println("common ancestor: " + path1.get(i - 1));
+        }
+
     }
     public static void main(String[] args) {
+
+        int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        BinaryTree tree = new BinaryTree();
+        Node root = tree.buildTree(nodes);
+        ArrayList<Integer> path = new ArrayList<>();
+        System.out.println(root.left.right.data);
+        tree.findLCA(root, 7, 6);
+        // 4. kth level nodes
+
+        // int[] nodes1 = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // BinaryTree tree1 = new BinaryTree();
+        // Node root = tree1.buildTree(nodes1);   
+        // tree1.kLevel(root, 1, 2);
+
+
+        // 3. Diammeter approach 2
+        // BinaryTree tree = new BinaryTree();
+        // int[] nodes = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // Node root = tree.buildTree(nodes);   
         // System.out.println(tree.Diam(root).diam);
-        int[] nodes1 = {1,2,-1,4,-1,5,-1,6,-1,-1,3,-1,-1};
-        BinaryTree tree1 = new BinaryTree();
-        Node root = tree1.buildTree(nodes1);   
-        tree1.preOrder(root);
-        System.out.println();
-        tree1.topView(root);
+
+        // System.out.println();
+        // ArrayList<Integer> path = new ArrayList<>();
+        // tree1.findPath(root, root.left.right, path);
+        // System.out.println(path);
+        // tree1.topView(root);
         
         
         // BinaryTree tree2 = new BinaryTree();
