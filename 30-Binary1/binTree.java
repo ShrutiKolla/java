@@ -1,5 +1,7 @@
 import java.util.*;
 import java.util.LinkedList;
+
+import javax.xml.crypto.dsig.Transform;
 public class binTree {
     static class Node {
         int data;
@@ -281,18 +283,108 @@ public class binTree {
             return root;
         }
 
+        // 6. Min dist between 2 nodes
+
+        public int distLca(Node root, int node) {
+            if(root == null) {
+                return -1;
+            }
+            if(root.data == node) {
+                return 0;
+            }
+            int leftDist = distLca(root.left, node);
+            int rightDist = distLca(root.right, node);
+            if(leftDist > -1) {
+                return leftDist + 1;
+            }
+            if(rightDist > -1) {
+                return rightDist + 1;
+            }
+            return -1;
+        }
+        public int minDist(Node root, int n1, int n2) {
+            Node LCA = lca(root, n1, n2);
+            int dist1 = distLca(LCA, n1);
+            int dist2 = distLca(LCA, n2);
+            return dist1 + dist2;
+        }
+
+        // kth ancestor of a node
+        public int kAncestor(Node root, int node, int k) {
+            if(root == null) {
+                return -1;
+            }
+            if(root.data == node) {
+                return 0;
+            }
+            int leftDist = kAncestor(root.left, node, k);
+            int rightDist = kAncestor(root.right, node, k);
+
+            if(leftDist == -1 && rightDist == -1) {
+                return -1;
+            }
+            int max = Math.max(leftDist, rightDist) + 1;
+            if(max == k) {
+                System.out.println(k + "th ancestor: " + root.data);
+            }
+            return max;
+        }
+
+        // 8. Transform to a sum tree
+        public int transform(Node root) {
+            if(root == null) {
+                return 0;
+            }
+            int data = root.data;
+            int leftChild = transform(root.left);
+            int rightChild = transform(root.right);
+            int totleft = root.left == null ? leftChild : root.left.data + leftChild; 
+            int totright = root.right == null ? rightChild : root.right.data + rightChild; 
+            root.data = totleft + totright;
+            return data;
+        }
     }
     public static void main(String[] args) {
-        // 5. find lowest common ancestor
+        // 8. transform to sum tree
         int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         BinaryTree tree = new BinaryTree();
         Node root = tree.buildTree(nodes);
-        ArrayList<Integer> path = new ArrayList<>();
-        System.out.println(root.left.right.data);
-        tree.findLCA(root, 7, 6);
+        tree.transform(root);
+        tree.levelOrder(root);
+        
+
+        // 7. kth ancestor of a node
+        // int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // BinaryTree tree = new BinaryTree();
+        // Node root = tree.buildTree(nodes);
+        // tree.kAncestor(root, 6, 1);
+
+        /*
+                     1
+                   /   \
+                  2     3
+                 / \   / \
+                4   5 6   7
+        */ 
+
+        // 6. Min dist between 2 nodes
+        // int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // BinaryTree tree = new BinaryTree();
+        // Node root = tree.buildTree(nodes);
+        // int n1 = 2;
+        // int n2 = 7;
+        // System.out.println(tree.minDist(root, n1, n2));
+
+
+        // 5. find lowest common ancestor
+        // int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // BinaryTree tree = new BinaryTree();
+        // Node root = tree.buildTree(nodes);
+        // System.out.println(root.left.right.data);
+        // tree.findLCA(root, 7, 6);
 
         // 2nd approach
-        System.out.println(tree.lca(root, 7, 6).data);
+        // System.out.println(tree.lca(root, 7, 6).data);
         
         // 4. kth level nodes
 
