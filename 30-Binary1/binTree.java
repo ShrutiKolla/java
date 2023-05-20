@@ -265,15 +265,35 @@ public class binTree {
             System.out.println("common ancestor: " + path1.get(i - 1));
         }
 
+        // 5.2 findlca approach 2
+        public Node lca(Node root, int n1, int n2) {
+            if(root == null || root.data == n1 || root.data == n2) {
+                return root;
+            }
+            Node leftLCA = lca(root.left, n1, n2);
+            Node rightLCA = lca(root.right, n1, n2);
+            if(leftLCA == null) {
+                return rightLCA;
+            }
+            if(rightLCA == null) {
+                return leftLCA;
+            }
+            return root;
+        }
+
     }
     public static void main(String[] args) {
-
+        // 5. find lowest common ancestor
         int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         BinaryTree tree = new BinaryTree();
         Node root = tree.buildTree(nodes);
         ArrayList<Integer> path = new ArrayList<>();
         System.out.println(root.left.right.data);
         tree.findLCA(root, 7, 6);
+
+        // 2nd approach
+        System.out.println(tree.lca(root, 7, 6).data);
+        
         // 4. kth level nodes
 
         // int[] nodes1 = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
