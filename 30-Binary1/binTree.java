@@ -222,11 +222,11 @@ public class binTree {
 
         // 4. kth level nodes
         public void kLevel(Node root, int level, int k) {
-            if(level == k) {
-                System.out.print(root.data + " ");
+            if(root == null) {
                 return;
             }
-            if(root == null) {
+            if(level == k) {
+                System.out.print(root.data + " ");
                 return;
             }
             kLevel(root.left, level + 1, k);
@@ -309,7 +309,7 @@ public class binTree {
             return dist1 + dist2;
         }
 
-        // kth ancestor of a node
+        // 7. kth ancestor of a node
         public int kAncestor(Node root, int node, int k) {
             if(root == null) {
                 return -1;
@@ -346,13 +346,12 @@ public class binTree {
     }
     public static void main(String[] args) {
         // 8. transform to sum tree
-        int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
-        BinaryTree tree = new BinaryTree();
-        Node root = tree.buildTree(nodes);
-        tree.transform(root);
-        tree.levelOrder(root);
+        // int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        // BinaryTree tree = new BinaryTree();
+        // Node root = tree.buildTree(nodes);
+        // tree.transform(root);
+        // tree.levelOrder(root);
         
-
         // 7. kth ancestor of a node
         // int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         // BinaryTree tree = new BinaryTree();
@@ -388,10 +387,10 @@ public class binTree {
         
         // 4. kth level nodes
 
-        // int[] nodes1 = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
-        // BinaryTree tree1 = new BinaryTree();
-        // Node root = tree1.buildTree(nodes1);   
-        // tree1.kLevel(root, 1, 2);
+        int[] nodes1 = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
+        BinaryTree tree1 = new BinaryTree();
+        Node root = tree1.buildTree(nodes1);   
+        tree1.kLevel(root, 1, 4);
 
 
         // 3. Diammeter approach 2
