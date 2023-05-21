@@ -1,3 +1,4 @@
+import java.util.*;
 public class BST {
     static class Node{
         int data;
@@ -92,18 +93,69 @@ public class BST {
             printIR(root.left, k1, k2);
         }
     }
+
+    // 5. root to leaf -- my approach
+    public static Node paths(Node root, ArrayList<Integer> path) {
+        if(root == null) {
+            return null;
+        }
+        path.add(root.data); 
+        Node lefttree = paths(root.left, path); 
+        Node righttree =  paths(root.right, path);
+        if(lefttree == null && righttree == null) {
+            System.out.println(path);
+        }
+        path.remove(path.size() - 1);
+        return root;
+    }
+    // didi's approach
+    public static void root2leaf(Node root, ArrayList<Integer> path) {
+        if(root == null) {
+            return;
+        }
+        path.add(root.data);
+        if(root.left == null && root.right == null) {
+            System.out.println(path);
+        }
+        root2leaf(root.left, path);
+        root2leaf(root.right, path);
+        path.remove(path.size() - 1);
+    }
+
+    // valid bst --> snapdeal, amazon, facebook
+    /*
+        8 5 3 
+        8 5 6
+        8 10 11 14
+        8 
+    */ 
     public static void main(String[] args) {
-        int values[] = {8,6,3,5,1,4,10,11,14};
-        // int values[] = {8,5,3,1,4,6,10,11,14};
+        
+        /*
+            ........ 8
+            ......./   \
+            ......5     10
+            ..../   \      \
+               3     6      11
+             ................\
+            ................. 14
+        */ 
+
+        // int values[] = {8,6,3,5,1,4,10,11,14};
+        int values[] = {8,5,3,6,10,11,14};
         Node root = null;
         for (int i = 0; i < values.length; i++) {
             root = insert(root, values[i]);
         }
         // System.out.println(search(root, 0));
         // delete(root, 5);
+        // System.out.println();
+        // printIR(root, 5, 12);
+
         inorder(root);
-        System.out.println();
-        printIR(root, 5, 12);
+        ArrayList<Integer> path = new ArrayList<>();
+        // paths(root, path);
+        root2leaf(root, path);
     }
     
 }
