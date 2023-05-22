@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.LinkedList;
 public class BST {
     static class Node{
         int data;
@@ -122,7 +123,56 @@ public class BST {
         path.remove(path.size() - 1);
     }
 
-    // valid bst --> snapdeal, amazon, facebook
+    // 6. valid bst --> snapdeal, amazon, facebook
+    public static boolean valid(Node root, Node min, Node max) {
+        if(root == null) {
+            return true;
+        } else if(min != null  && root.data <= min.data) {
+            return false;
+        } else if (max != null && root.data >= max.data) {
+            return false;
+        } else {
+            return valid(root.left, min, root) && valid(root.right, root, max);
+        }
+    }
+
+    // 7. mirror a bst
+
+    public static void levelOrder(Node root) {
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()) {
+            Node curr = q.remove();
+            if(curr == null) {
+                if(q.isEmpty()) {
+                    break;
+                }
+                System.out.println();
+                q.add(null);
+            } else {
+                System.out.print(curr.data + " ");
+                if(curr.left != null) {
+                    q.add(curr.left);
+                }
+                if(curr.right != null) {
+                    q.add(curr.right);
+                }
+            }
+        }
+    }
+
+    public static void mirror(Node root) {
+        if(root == null) {
+            return;
+        }
+        Node temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        mirror(root.left);
+        mirror(root.right);
+    }
+
     /*
         8 5 3 
         8 5 6
@@ -142,20 +192,48 @@ public class BST {
         */ 
 
         // int values[] = {8,6,3,5,1,4,10,11,14};
-        int values[] = {8,5,3,6,10,11,14};
-        Node root = null;
-        for (int i = 0; i < values.length; i++) {
-            root = insert(root, values[i]);
-        }
+        // int values[] = {8,5,3,6,10,11,14};
+        // Node root = null;
+        // for (int i = 0; i < values.length; i++) {
+        //     root = insert(root, values[i]);
+        // }
+
         // System.out.println(search(root, 0));
         // delete(root, 5);
         // System.out.println();
         // printIR(root, 5, 12);
 
+        /*
         inorder(root);
         ArrayList<Integer> path = new ArrayList<>();
         // paths(root, path);
-        root2leaf(root, path);
+        root2leaf(root, path); 
+        */
+
+        // 6. valid
+
+        // Node root = new Node(3);
+        // root.left = new Node(2);
+        // root.right = new Node(5);
+        // root.left.left = new Node(1);
+        // root.left.right = new Node(4);
+        // inorder(root);
+        // if(valid(root, null, null)) {
+        //     System.out.println("valid");
+        // } else {
+        //     System.out.println("not valid");
+        // }
+
+        int values[] = {8,5,3,6,10,11,14};
+        Node root = null;
+        for (int i = 0; i < values.length; i++) {
+            root = insert(root, values[i]);
+        }
+        inorder(root);
+        levelOrder(root);
+        mirror(root);
+        System.out.println();
+        levelOrder(root);
     }
     
 }
