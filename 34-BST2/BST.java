@@ -32,8 +32,8 @@ public class BST {
         if(root == null) {
             return;
         }
-        inorder(root.left);
         System.out.print(root.data + " ");
+        inorder(root.left);
         inorder(root.right);
     }
 
@@ -73,6 +73,33 @@ public class BST {
         root.right = balance(root.right, arr, mid + 1, ed);
         return root;
     }
+
+    // 2. convert bst to balanced bst
+    public static void getInorder(Node root, ArrayList<Integer> inorder) {
+        if(root == null) {
+            return;
+        }
+        getInorder(root.left, inorder);
+        inorder.add(root.data);
+        getInorder(root.right, inorder);
+    }
+
+    public static Node balance2(ArrayList<Integer> inorder, int st, int ed) {
+        if(st > ed) {
+            return null;
+        }
+        int mid = (st + ed)/2;
+        Node root = new Node(inorder.get(mid));
+        root.left = balance2(inorder, st, mid - 1);
+        root.right = balance2(inorder, mid + 1, ed);
+        return root;
+    }
+    public static Node balancedBST(Node root) {
+        // get inorder
+        ArrayList<Integer> inorder = new ArrayList<>();
+        getInorder(root, inorder);
+        return balance2(inorder, 0, inorder.size() - 1);
+    }
     public static void main(String[] args) {
         // int values[] = {8,5,3,6,11,10,12};
         // Node root = null;
@@ -84,11 +111,26 @@ public class BST {
         // levelOrder(root);
 
         // 1. sorted arr to balanced bst
+        // Node root = null;
+        // int arr[] = {3, 5, 6, 8, 10, 11, 12};
+        // root = balance(root, arr, 0, arr.length - 1);
+        // inorder(root);
+        // System.out.println();
+        // levelOrder(root);
+
+        // 2.
+        int arr[] = {1,3,2,4,8};
         Node root = null;
-        int arr[] = {3, 5, 6, 8, 10, 11, 12};
-        root = balance(root, arr, 0, arr.length - 1);
+        for (int i = 0; i < arr.length; i++) {
+            root = insert(root, arr[i]);
+        }
+        levelOrder(root);
+        System.out.println();
         inorder(root);
+        root = balancedBST(root);
         System.out.println();
         levelOrder(root);
+        System.out.println();
+        inorder(root);
     }
 }
