@@ -5,7 +5,11 @@ public class comparablePrac {
         list.add(new Student("shruti", 20));
         list.add(new Student("labonno", 23));
         list.add(new Student("boichu", 18));
-        Collections.sort(list);
+        // Collections.sort(list);
+        
+        // 2nd class defn
+        // Collections.sort(list, (a, b) -> a.age - b.age);
+        // Collections.sort(list, Comparator.comparing(o -> o.age));
         System.out.println(list);
     }
 }
@@ -26,3 +30,19 @@ class Student implements Comparable<Student>{
         return this.name + " " + this.age;
     }
 }
+// class Student {
+//     String name;
+//     int age;
+//     Student(String n, int a) {
+//         name = n;
+//         age = a;
+//     }
+//     public String toString() {
+//         return this.name + " " + this.age;
+//     }
+// }
+
+// Arrays
+/*
+    Arrays.sort(  arr_name, Comparator.comparingDouble(o -> o[0])  ) --> on te
+*/ 
