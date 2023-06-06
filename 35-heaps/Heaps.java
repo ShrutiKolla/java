@@ -171,24 +171,132 @@ public class Heaps {
     public static void connectNropes(int ropes[]) {
         int cost = 0;
 
-        PriorityQueue<Ropes> PQ = new PriorityQueue<>();
+        // PriorityQueue<Ropes> PQ = new PriorityQueue<>();
+        PriorityQueue<Integer> PQ = new PriorityQueue<>();
+
         for (int i = 0; i < ropes.length; i++) {
-            PQ.add(new Ropes(ropes[i]));
+            // PQ.add(new Ropes(ropes[i]));
+            PQ.add(ropes[i]);
         }
 
         while(PQ.size() > 1) {
-            int sum = PQ.remove().rlen + PQ.remove().rlen;
-            PQ.add(new Ropes(sum));
+            // int sum = PQ.remove().rlen + PQ.remove().rlen;
+            int sum = PQ.remove() + PQ.remove();
+            PQ.add(sum);
             cost += sum;
         }
         System.out.println("total cost : " + cost);
     }
 
+    // 4. weakest soldier
+    static class soldier implements Comparable<soldier>{
+        int idx;
+        int no;
+
+        soldier(int idx, int no) {
+            this.idx = idx;
+            this.no = no;
+        }
+
+        @Override
+        public int compareTo(soldier s) {
+            if(this.no == s.no) {
+                // return this.idx < s.idx ? -1 : 1;
+                return this.idx - s.idx;
+            }
+
+            // return this.no < s.no ? -1 : 1;
+            return this.no - s.no;
+        }
+
+        @Override
+        public String toString() {
+            return "row " + idx + " ";
+        }
+
+    }
+
+    public static void weakestSoldier(int sol[][], int k) {
+
+        PriorityQueue<soldier> PQ = new PriorityQueue<>();
+        for (int i = 0; i < sol.length; i++) {
+            int count = 0;
+            for (int j = 0; j < sol[i].length; j++) {
+                count += sol[i][j];
+            }
+            PQ.add(new soldier(i, count));
+        }
+        for (int i = 0; i < k; i++) {
+            System.out.print(PQ.remove());
+        }
+    }
+
+    // 5. Sliding window max
+    static class Window implements Comparable<Window>{
+        int idx;
+        int el;
+        
+        Window(int i, int e) {
+            idx = i;
+            el = e;
+        }
+
+        public int compareTo(Window w) {
+            if(this.el == w.el) {
+                return 0;
+            }
+            return w.el - this.el;
+        }
+
+        public String toString() {
+            return this.el + "";
+        }
+    }
+    public static void windowMax(int arr[], int k) {
+        int n = arr.length;
+        int i = 0;
+        int j = 0;
+
+        PriorityQueue<Window> PQ = new PriorityQueue<>();
+        int max[] = new int[n - k + 1];
+        while(i < k) {
+            PQ.add(new Window(i, arr[i]));
+            i++;
+        }
+        max[j] = PQ.peek().el;
+        j++;
+        while(i < n) {
+            while(PQ.peek().idx <= i - k) {
+                PQ.remove();
+            }
+            PQ.add(new  Window(i, arr[i]));
+            max[j] = PQ.peek().el;
+
+            j++;i++;
+        }
+        for (int l = 0; l < max.length; l++) {
+            System.out.print(max[l] + " ");
+        }
+    }
+
     public static void main(String[] args) {
+        // 5.
+        // int arr[] = {1, 3, -1, -3, 5, 3, 6, 7};
+        int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int k = 3;
+        windowMax(arr, k);
+
+        // 4.
+        // int sol[][] = {{1,0,0,0},
+        //             {1,1,1,1},
+        //             {1,0,0,0},
+        //             {1,0,0,0}};
+        // int k = 2;
+        // weakestSoldier(sol, k);
 
         // 3.
-        int ropes[] = {2,3,4,6};
-        connectNropes(ropes);
+        // int ropes[] = {6,3,2,3,4};
+        // connectNropes(ropes);
 
         // 2. nearest k cars
         // int cars[][] = {{3,3}, {5,-1}, {-2, 4}};
