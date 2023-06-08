@@ -36,7 +36,6 @@ public class HashMapCode {
             LinkedList<Node> ll = bucket[bi]; // ll at bi
             for (int i = 0; i < ll.size(); i++) {
                 if(ll.get(i).key == key) {
-                    System.out.println("exists at " + i);
                     return i;
                 }
             }
@@ -101,6 +100,40 @@ public class HashMapCode {
                 return null;
             }
         }
+
+        // 4. remove
+        public V remove(K key) {
+            int bi = hashFunction(key);
+            int di = searchInLL(key, bi);
+
+            if(di != -1) {
+                LinkedList<Node> ll = bucket[bi];
+                Node node = ll.remove(di);
+                n--;
+                return node.value;
+            } else {
+                return null;
+            }
+        }
+
+        // 5. keySet
+        public ArrayList<K> keySet() {
+
+            ArrayList<K> keys = new ArrayList<>();
+            
+            for (int i = 0; i < bucket.length; i++) {
+                LinkedList<Node> ll = bucket[i];
+                for (int j = 0; j < ll.size(); j++) {
+                    keys.add(ll.get(j).key);
+                }
+            }
+            return keys;
+        }
+
+        // 6. isEmpty
+        public Boolean isEmpty() {
+            return n == 0;
+        }
         public void print() {
             System.out.println("n : " + n);
             System.out.println("N : " + N);
@@ -123,7 +156,16 @@ public class HashMapCode {
         pop.put("US", 50);
         pop.put("India", 80);
         pop.put("Indo", 50);
-        // pop.print();
-        System.out.println(pop.containsKey("China"));
+        
+        // ArrayList<String> keys = pop.keySet();
+        // for (String k : keys) {
+            //     System.out.println(k + " : " + pop.get(k));
+        // }
+            
+        // System.out.println(pop.containsKey("China"));
+      
+        System.out.println(pop.remove("Indoo"));      
+        pop.print();
+        System.out.println(pop.isEmpty());
     }
 }
