@@ -1,5 +1,5 @@
 import java.util.*;
-public class HashMaps {
+public class Maps {
     public static void main(String[] args) {
         HashMap<String, Integer> menu = new HashMap<>();
         menu.put("coffee", 40); 
