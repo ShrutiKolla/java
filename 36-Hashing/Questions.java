@@ -43,11 +43,93 @@ public class Questions {
         
         return map.isEmpty();
     }
+
+    // 3. count distinct elements
+    public static int distinctElements(int[] num) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < num.length; i++) {
+            set.add(num[i]);
+        }
+        return set.size();
+    }
+
+    // 4. union and intersection
+    public static void unionAndIntersection(int[] arr1, int[] arr2) {
+        HashSet<Integer> union = new HashSet<>();
+        for (int i = 0; i < arr1.length; i++) {
+            union.add(arr1[i]);
+        }
+        for (int i = 0; i < arr2.length; i++) {
+            union.add(arr2[i]);
+        }
+        System.out.println(union.size() + " (" + union + ") ");
+
+        // HashSet<Integer> intersection = new HashSet<>();
+        // HashSet<Integer> arr = new HashSet<>();
+        union.clear();
+        for (int i = 0; i < arr1.length; i++) {
+            union.add(arr1[i]);
+            // arr.add(arr1[i]);
+        }
+        int count = 0;
+        for (int i = 0; i < arr2.length; i++) {
+            // if(arr.contains(arr2[i])) {
+            //     intersection.add(arr2[i]);
+            // }
+            if(union.contains(arr2[i])) {
+                count++;
+                union.remove(arr2[i]);
+            }
+        }
+        // System.out.println(intersection.size() + " (" + intersection + ") ");
+        System.out.println(count);
+    }
+
+    // 5. find itinerary from tickets
+    public static void itinerary(HashMap<String, String> tickets) {
+        String start = startingPoint(tickets);
+        while(start != null) {
+            System.out.print(start + " --> ");
+            start = tickets.get(start);
+        }
+
+        System.out.println("destination");
+    }
+    public static String startingPoint(HashMap<String, String> tickets) {
+        HashMap<String, String> revMap = new HashMap<>();
+        for(String key : tickets.keySet()) {
+            revMap.put(tickets.get(key), key);
+        }
+        for(String k : tickets.keySet()) {
+            if(!revMap.containsKey(k)) {
+                return k;
+            }
+        }
+        return null;
+    }
     public static void main(String[] args) {
+        // 5. find itinerary from tickets
+        HashMap<String, String> tickets = new HashMap<>();
+        tickets.put("Chennai", "Bengaluru"); 
+        tickets.put("Mumbai", "Delhi"); 
+        tickets.put("Goa", "Chennai"); 
+        tickets.put("Delhi", "Goa"); 
+        itinerary(tickets);
+
+        // 4. union and intersection
+        // int arr1[] = {7,3,9};
+        // int arr2[] = {6,3,9,2,9,4};
+        // unionAndIntersection(arr1, arr2);
+
+        // 3. count distinct elements
+        // int num[] = {4, 3, 2, 5, 6, 7, 3, 4, 2, 1};
+        // System.out.println(distinctElements(num));
+
         // 2. valid anagrams
-        String s = "keen";
-        String t = "knee";
-        System.out.println(validAnagrams(s, t));
+        // String s = "keen";
+        // String t = "knee";
+        // System.out.println(validAnagrams(s, t));
+
         // 1. majority element
         // int nums[] = {1, 3, 2, 5, 1, 3, 1, 5, 1};
         // int nums[] = {1, 2};
