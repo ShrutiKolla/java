@@ -124,23 +124,29 @@ public class Questions {
         System.out.println("largest: " + len);
     }
     // subarray sum = k
-    public static void subarrSumK(Integer arr[], int k) {
+    public static void subarrSumK(int arr[], int k) {
         HashMap<Integer, Integer> map = new HashMap<>(); // (sum, count)
         int sum = 0;
-        for (int i = 0; i < arr.length; i++) {
-            sum += arr[i];
-            if(sum == k) {
-                if(map.containsKey(sum)) {
-
-                }
-            }            
+        int ans = 0;
+        map.put(0,1);
+        for (int j = 0; j < arr.length; j++) {
+            sum += arr[j];
+            if(map.containsKey(sum - k)) {
+                ans += map.get(sum - k);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
         }
+        System.out.println("ans: " + ans);
     }
     public static void main(String[] args) {
+        // 7. subarrays sum = k
+        int arr[] = {10, 2, -2, -20, 10};
+        subarrSumK(arr, -10);
+
         //6. Largest subarray sum is 0
         // int arr[] = {15, -2, 2, -8, 1, 7, 10};
-        int arr[] = {3,4,5};
-        LargestSubarray0(arr); 
+        // int arr[] = {3,4,5};
+        // LargestSubarray0(arr); 
 
         // 5. find itinerary from tickets
         // HashMap<String, String> tickets = new HashMap<>();
