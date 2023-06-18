@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.LinkedList;
 public class QueueCF {
     // 4::
     public static void nonRepeating(String str) {
