@@ -59,6 +59,32 @@ public class graph_questions {
             }
         }
     }
+
+    static Boolean vis[] = new Boolean[7];
+    public static void dfs(ArrayList<Edge>[] graph, int curr) { // O(V+E)
+        System.out.println(curr);
+        vis[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edge e = graph[curr].get(i);
+            if(vis[e.dest] == null) {
+                dfs(graph, e.dest);
+            }
+        }
+    }
+
+    static Boolean hasPath(ArrayList<Edge>[] graph, int src, int dest) {
+        if(src == dest) {
+            return true;
+        }
+        vis[src] = true;
+        for (int i = 0; i < graph[src].size(); i++) {
+            Edge e = graph[src].get(i);
+            if(vis[e.dest] == null && hasPath(graph, e.dest, dest)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public static void main(String[] args) {
         int V = 7;
@@ -66,6 +92,8 @@ public class graph_questions {
         ArrayList<Edge>[] graph = new ArrayList[V];
 
         create(graph);
-        bfs(graph);
+        // bfs(graph);
+        // dfs(graph, 0);
+        System.out.println(hasPath(graph, 0, 7));
     }
 }
