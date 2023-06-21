@@ -86,6 +86,21 @@ public class graph_questions {
         return false;
     }
 
+    // cycle detection
+    static Boolean cycle_dfs(ArrayList<Edge>[] graph, int curr, int par, Boolean[] vis) {
+        vis[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edge e = graph[curr].get(i);
+            if(vis[e.dest] == null) {
+                if(cycle_dfs(graph, e.dest, curr, vis)){
+                    return true;
+                }
+            } else if (e.dest != par){
+                return true;
+            }
+        }
+        return false;
+    }
         
     public static void main(String[] args) {
         int V = 7;
