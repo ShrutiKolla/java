@@ -27,6 +27,29 @@ public class KnapsackCode {
             return dp[n][W] = knapsackMemo(wt, val, W, n-1, dp);
         }
     }
+
+    public static int knapsackTab(int[] wt, int[] val, int W) {
+        int n = val.length;
+        int[][] dp = new int[n+1][W+1];
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < W + 1; j++) {
+                int v = val[i - 1];
+                int w = wt[i - 1];
+                if(w <= j) { // valid
+                    int incItem = v + dp[i - 1][j - w];
+                    int excItem = dp[i - 1][j];
+                    dp[i][j] = Math.max(incItem, excItem);
+                } else {
+                    int excItem = dp[i - 1][j];
+                    dp[i][j] = excItem;
+                }
+                
+            }
+        }
+
+        return dp[n][W];
+    }
     public static void main(String[] args) {
         int wt[] = {2,5,1,3,4};
         int n = wt.length;
@@ -40,5 +63,6 @@ public class KnapsackCode {
             }
         }
         System.out.println(knapsackMemo(wt, val, W, n, dp));
+        System.out.println(knapsackTab(wt, val, W));
     }
 }
