@@ -47,7 +47,7 @@ public class KnapsackCode {
                 
             }
         }
-
+        
         return dp[n][W];
     }
     public static void main(String[] args) {
