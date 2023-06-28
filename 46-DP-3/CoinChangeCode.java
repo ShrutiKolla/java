@@ -11,7 +11,9 @@ public class CoinChangeCode {
         for (int i = 0; i < dp.length + 1; i++) {
             for (int j = 0; j < sum + 1; j++) {
                 int w = coins[i-1];
-                if(w <= j) {}
+                if(w <= j) {
+                    if(dp)
+                }
             }
         }
     }
