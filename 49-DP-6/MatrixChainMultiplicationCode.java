@@ -33,6 +33,26 @@ public class MatrixChainMultiplicationCode {
         }
         return dp[i][j] = ans;
     }
+
+    public static int mcmTab(int[] arr) {
+        int n = arr.length;
+        int[][] dp = new int[n][n];
+
+        // len = 1 --> single matrix
+        for (int i = 0; i < dp.length; i++) {
+            dp[i][i] = 0;
+        }
+        for (int len = 2; len <= n-1 ; len++) {
+            for (int i = 1; i <= n - len; i++) {
+                int j = i + len -1;
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k < j; k++) {
+                    dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k+1][j] + arr[i-1]*arr[k]*arr[j]);
+                }
+            }
+        }
+        return dp[1][n-1];
+    }
     public static void main(String[] args) {
         int arr[] = {1,2,3,4,3};
         int n = arr.length;
@@ -42,5 +62,6 @@ public class MatrixChainMultiplicationCode {
         }
         System.out.println(mcm(arr, 1, n-1));
         System.out.println(mcmMemo(arr, 1, n-1, dp));
+        System.out.println(mcmTab(arr));
     }
 }
