@@ -18,13 +18,12 @@ public class triess {
     // 1. insertion --> O(L) --> L : length of the longest string
     public static void insert(String s) {
         Node curr = root;
-        // curr.freq = -1;
         for (int i = 0; i < s.length(); i++) {
             int idx = s.charAt(i) - 'a';
             if(curr.children[idx] == null) {
                 curr.children[idx] = new Node();
             } else {
-                curr.freq++;
+                curr.children[idx].freq++;
             }
             curr = curr.children[idx];
         }
@@ -99,7 +98,7 @@ public class triess {
             insert(words[i]);
         }
 
-        System.out.println(search("an"));*/
+        System.out.println(search("thee"));*/
     }
 
 }
