@@ -31,9 +31,23 @@ public class LongestWordAllPrefixesCode {
     static String ans = "";
     // longest word with all prefixes
     public static void LongestPrefixString(Node root, String temp){
+        for (int i = 0; i < 26; i++) {
+            if(root.children[i] != null && root.children[i].eow == true) {
+                temp = temp + (char)('a' + i);
+                LongestPrefixString(root.children[i], temp);
+                if(ans.length() < temp.length()) {
+                    ans = temp;
+                }
+                temp = temp.substring(0, temp.length()-1);
+            }            
+        }
     }
     public static void main(String[] args) {
-        String words[] = {"a", "banana", "app", "appl", "ap", "apply", "apple"};
-
+        String words[] = {"a", "banana", "app", "appl", "ap", "apply", "apple", "b", "ba", "ban", "bana", "banan"};
+        for (int i = 0; i < words.length; i++) {
+            insert(words[i]);
+        }
+        LongestPrefixString(root, "");
+        System.out.println(ans);
     }
 }
