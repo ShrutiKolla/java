@@ -213,7 +213,7 @@ public static int kadan(int arr[])
     {
         
         Scanner sc = new Scanner(System.in);
-        int arr[] = {-2, -3, -9, -1, -6};
+        int arr[] = {-2, -3, 3, -1, -6};
         // for(int i = 0 ; i < arr.length ; i++){
         //     arr[i] = sc.nextInt();
         // }
