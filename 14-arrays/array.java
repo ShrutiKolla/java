@@ -183,8 +183,8 @@ public static int prefixSum(int arr[])
     return max_sum;
 }
 
-// max subarray sum using PREFIX SUM
-public static int kadan(int arr[])
+// max subarray sum using KADANE'S ALGO
+public static int kadane(int arr[])
 {
     int currsum = 0;
     int max_sum = Integer.MIN_VALUE;
@@ -213,7 +213,8 @@ public static int kadan(int arr[])
     {
         
         Scanner sc = new Scanner(System.in);
-        int arr[] = {-2, -3, 3, -1, -6};
+        // int arr[] = {-2, -3, 3, -1, -6};
+        int arr[] = {-2, -3, 4, -1, -2, 1, 5, -3};
         // for(int i = 0 ; i < arr.length ; i++){
         //     arr[i] = sc.nextInt();
         // }
@@ -221,7 +222,7 @@ public static int kadan(int arr[])
         // {
         //     System.out.println(arr[i]);
         // }
-        subArrays(arr);
-        System.out.print("\nmax sum: " + kadan(arr));
+        // subArrays(arr);
+        System.out.print("\nmax sum: " + kadane(arr));
     }
 }
