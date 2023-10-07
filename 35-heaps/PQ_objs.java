@@ -14,7 +14,7 @@ public class PQ_objs {
             if(this.rank == a.rank) {
                 return 0;
             }
-            return this.rank < a.rank ? -1:1;
+            return this.rank < a.rank ? 1:-1; // dec
         }
         @Override
         public String toString() {

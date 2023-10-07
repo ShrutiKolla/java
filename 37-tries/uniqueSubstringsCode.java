@@ -2,11 +2,11 @@ public class uniqueSubstringsCode {
     static class Node {
         Node children[];
         boolean eow;
-        int freq;
+        // int freq;
 
         public Node() {
             children = new Node[26];
-            freq = -1;
+            // freq = -1;
         }
     }
 
@@ -19,9 +19,9 @@ public class uniqueSubstringsCode {
             int idx = str.charAt(i) - 97;
             if (curr.children[idx] == null) {
                 curr.children[idx] = new Node();
-                curr.children[idx].freq = 1;
+                // curr.children[idx].freq = 1;
             } else {
-                curr.children[idx].freq++;
+                // curr.children[idx].freq++;
             }
             curr = curr.children[idx];
         }
