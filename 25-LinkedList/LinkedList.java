@@ -181,7 +181,7 @@ public class LinkedList {
     // didi's approach
 
     // 1. slow fast approach
-    public  Node findMid(Node head) {
+    public  Node findMid() {
         Node slow = head;
         Node fast = head;
         while(fast != null && fast.next != null) {
@@ -210,7 +210,7 @@ public class LinkedList {
         if(head == null || head.next == null) {
             return true;
         }
-        Node midNode = findMid(head);
+        Node midNode = findMid();
 
         // Node head1 = rev(midNode); // head of reversed 2nd half
         // Node right = head1;
@@ -252,7 +252,7 @@ public class LinkedList {
         addLast(1);
         addLast(3);
         addLast(3);
-        addLast(2);
+        addLast(1);
         System.out.println(ll.paliLL());
     }
 }
